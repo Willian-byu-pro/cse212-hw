@@ -13,7 +13,9 @@ public class PersonQueue
     /// <param name="person">The person to add</param>
     public void Enqueue(Person person)
     {
-        _queue.Insert(0, person);
+        // Using Insert(0, person) forces every Enqueue to add the item to the front,
+        // which violates the expected queue behavior.
+        _queue.Add(person); // I used Add because it automatically places the item at the end of the queue.
     }
 
     public Person Dequeue()

@@ -44,7 +44,17 @@ public class TakingTurnsQueue
             {
                 person.Turns -= 1;
                 _people.Enqueue(person);
+                
             }
+
+            else if (person.Turns <= 0) // When the turn value reached 1, it was removed and stopped entering the loop.
+                                        // Using <= 0 ensures that items with this value continue to be added to the list.
+            {
+
+                _people.Enqueue(person);
+                
+            }
+            
 
             return person;
         }
