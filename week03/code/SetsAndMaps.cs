@@ -1,4 +1,7 @@
+using System.Reflection;
 using System.Text.Json;
+using Microsoft.VisualBasic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 public static class SetsAndMaps
 {
@@ -22,7 +25,22 @@ public static class SetsAndMaps
     public static string[] FindPairs(string[] words)
     {
         // TODO Problem 1 - ADD YOUR CODE HERE
-        return [];
+        var result = new HashSet<string> ();
+        var set1 = new HashSet<string> (words);
+        for(var i=0; i < words.Length;++i)
+        {
+            List<char> set2 = new (words[i]);
+            var invers = set2[1].ToString()+set2[0].ToString();
+            if (set1.Contains(invers)&& string.Compare(words[i], invers) < 0)
+            {
+                var answer = $"{invers} & {words[i]}";
+                
+                result.Add(answer);
+            }
+            
+
+        }
+        return result.ToArray();
     }
 
     /// <summary>
@@ -37,13 +55,25 @@ public static class SetsAndMaps
     /// <param name="filename">The name of the file to read</param>
     /// <returns>fixed array of divisors</returns>
     public static Dictionary<string, int> SummarizeDegrees(string filename)
+
     {
         var degrees = new Dictionary<string, int>();
+        List<int> total = new ();
         foreach (var line in File.ReadLines(filename))
         {
             var fields = line.Split(",");
-            // TODO Problem 2 - ADD YOUR CODE HERE
-        }
+            string degree = fields[3];
+
+          if (degrees.ContainsKey(degree))
+            {
+              degrees[degree] += 1;   // soma mais uma ocorrência
+            }
+
+          else
+            {
+              degrees[degree] = 1;    // primeira vez que aparece
+            }
+        };
 
         return degrees;
     }
@@ -65,9 +95,37 @@ public static class SetsAndMaps
     /// using the [] notation.
     /// </summary>
     public static bool IsAnagram(string word1, string word2)
-    {
-        // TODO Problem 3 - ADD YOUR CODE HERE
-        return false;
+    {   
+        word1 = word1.ToUpper().Replace(" ", "");
+        word2 = word2.ToUpper().Replace(" ", "");
+        if (word1.Length != word2.Length)
+             return false;
+
+        Dictionary<char, int> anagram = new();
+
+        foreach (char letra in word1)
+        {
+            if (anagram.ContainsKey(letra))
+                anagram[letra]++;
+            else
+                anagram[letra] = 1;
+        }
+
+
+        foreach (char letra in word2)
+        {
+            if (!anagram.ContainsKey(letra))
+                return false;
+
+           anagram[letra]--;
+
+           if (anagram[letra] < 0)
+                return false;
+        }
+
+        return true;
+        
+        
     }
 
     /// <summary>

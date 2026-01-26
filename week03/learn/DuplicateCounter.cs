@@ -1,4 +1,7 @@
-﻿public class DuplicateCounter
+﻿using System.Globalization;
+using System.IO.Pipelines;
+
+public class DuplicateCounter
 {
     //Count how many duplicates are in a collection of data.
 
@@ -23,8 +26,12 @@
     }
 
     private static int CountDuplicates(int[] data)
-    {
-        // Add code here.
-        return 0;
+    {   
+        var set1 = new HashSet<int> (data); //cria um consunto onde os valores não se repetem
+        var set2 = set1.Count; // conta quanto o numero de itens no conjunto sem os repetidos
+
+        var result = data.Length - set2; // pegamos a contagem total da lista de numeros e subtraimos o conjunto e o resultado sera os duplicados
+
+        return result;
     }
 }
