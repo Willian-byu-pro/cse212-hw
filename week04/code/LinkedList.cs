@@ -143,9 +143,31 @@ public class LinkedList : IEnumerable<int>
                 current = current.Next;
             }
 
-            if (current!= null && current.Data == value)
+            else 
             {
-                RemoveHead();
+                if (_head == _tail)
+                {
+                    _head=null;
+                    _tail=null;
+                }
+
+                else if (current == _head)
+                {
+                    RemoveHead();
+                }
+
+                else if (current == _tail)
+                {
+                    RemoveTail();
+                }
+
+                else
+                {
+                    current.Prev!.Next = current.Next;
+                    current.Next!.Prev = current.Prev;
+                }
+
+                return;
             }
         }
         
@@ -201,8 +223,13 @@ public class LinkedList : IEnumerable<int>
     /// </summary>
     public IEnumerable Reverse()
     {
-        // TODO Problem 5
-        yield return 0; // replace this line with the correct yield return statement(s)
+        var curr = _tail; // Start at the beginning since this is a forward iteration.
+        while (curr is not null)
+        {
+            yield return curr.Data; // Provide (yield) each item to the user
+            curr = curr.Prev; // Go forward in the linked list
+        }
+         
     }
 
     public override string ToString()
@@ -228,3 +255,4 @@ public static class IntArrayExtensionMethods {
         return "<IEnumerable>{" + string.Join(", ", array.Cast<int>()) + "}";
     }
 }
+
