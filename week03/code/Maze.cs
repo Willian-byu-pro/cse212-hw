@@ -1,3 +1,5 @@
+using System.Security.Authentication;
+
 /// <summary>
 /// Defines a maze using a dictionary. The dictionary is provided by the
 /// user when the Maze object is created. The dictionary will contain the
@@ -32,7 +34,36 @@ public class Maze
     /// </summary>
     public void MoveLeft()
     {
-        // FILL IN CODE
+
+        var position = (_currX,_currY); // Minha posição atual
+
+
+            //A posição atual existe no mapa?
+        if (!_mazeMap.ContainsKey(position))
+        {
+              throw new InvalidOperationException("Can't go that way!");
+        }
+
+        bool[] directions = _mazeMap[position]; //cria uma verificação abrindo uma var Bool de verdadeiro ou falso e usa os parametros de _mazemap com as posiçoes
+                                                //Agora temos isso aplicado como parametro inicial:
+                                                //directions = [true, false, true, false]
+                                                //index      =   0      1      2     3
+
+        if (directions[0] == false)
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+
+        var nextposition = (_currX - 1, _currX);
+
+        if (!_mazeMap.ContainsKey(nextposition))
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+
+        _currX -= 1;
+        
+
     }
 
     /// <summary>
@@ -41,7 +72,32 @@ public class Maze
     /// </summary>
     public void MoveRight()
     {
-        // FILL IN CODE
+        var position = (_currX,_currY); // Minha posição atual
+
+            //A posição atual existe no mapa?
+        if (!_mazeMap.ContainsKey(position))
+        {
+              throw new InvalidOperationException("Can't go that way!");
+        }
+
+        bool[] directions = _mazeMap[position]; //cria uma verificação abrindo um diricionario de verdadeiro ou falso e usa os parametros de _mazemap com as posiçoes
+                                                //Agora temos isso aplicado como parametro inicial:
+                                                //directions = [true, false, true, false]
+                                                //index      =   0      1      2     3
+
+        if (directions[1] == false)
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+
+        var nextposition = (_currX + 1, _currY);
+
+        if (!_mazeMap.ContainsKey(nextposition))
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+
+        _currX += 1;
     }
 
     /// <summary>
@@ -50,8 +106,36 @@ public class Maze
     /// </summary>
     public void MoveUp()
     {
-        // FILL IN CODE
+        var position = (_currX,_currY); // Minha posição atual
+            //A posição atual existe no mapa?
+        if (!_mazeMap.ContainsKey(position))
+        {
+              throw new InvalidOperationException("Can't go that way!");
+        }
+        bool[] directions = _mazeMap[position]; //cria uma verificação abrindo um diricionario de verdadeiro ou falso e usa os parametros de _mazemap com as posiçoes
+                                                //Agora temos isso aplicado como parametro inicial:
+                                                //directions = [true, false, true, false]
+                                                //index      =   0      1      2     3
+
+        if (directions[2] == false)
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+
+        var nextposition = (_currX, _currY - 1);
+
+        if (!_mazeMap.ContainsKey(nextposition))
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+
+        _currY -= 1;
     }
+
+    /// <summary>
+    /// Check to see if you can move up.  If you can, then move.  If you
+    /// can't move, throw an InvalidOperationException with the message "Can't go that way!".
+    /// </summary>
 
     /// <summary>
     /// Check to see if you can move down.  If you can, then move.  If you
@@ -59,7 +143,32 @@ public class Maze
     /// </summary>
     public void MoveDown()
     {
-        // FILL IN CODE
+        var position = (_currX,_currY); // Minha posição atual
+
+            //A posição atual existe no mapa?
+        if (!_mazeMap.ContainsKey(position))
+        {
+              throw new InvalidOperationException("Can't go that way!");
+        }
+
+        bool[] directions = _mazeMap[position]; //cria uma verificação abrindo um diricionario de verdadeiro ou falso e usa os parametros de _mazemap com as posiçoes
+                                                //Agora temos isso aplicado como parametro inicial:
+                                                //directions = [true, false, true, false]
+                                                //index      =   0      1      2     3
+
+        if (directions[3] == false)
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+
+        var nextposition = (_currX, _currY + 1);
+
+        if (!_mazeMap.ContainsKey(nextposition))
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+
+        _currY += 1;
     }
 
     public string GetStatus()

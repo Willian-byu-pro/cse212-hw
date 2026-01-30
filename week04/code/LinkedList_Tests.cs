@@ -86,24 +86,24 @@ public class RemoveTailTests
 public class RemoveTests
 {
     [TestMethod]
-    public void Remove_NonExistant()
-    {
-        var ll = new LinkedList();
+        public void Remove_NonExistant()
+        {
+            var ll = new LinkedList();
 
-        ll.InsertHead(2);
-        ll.InsertHead(2);
-        ll.InsertHead(2);
-        ll.InsertHead(3);
-        ll.InsertHead(4);
-        ll.InsertHead(5);
+            ll.InsertHead(2);
+            ll.InsertHead(2);
+            ll.InsertHead(2);
+            ll.InsertHead(3);
+            ll.InsertHead(4);
+            ll.InsertHead(5);
 
-        ll.InsertAfter(3, 35);
-        ll.InsertAfter(5, 6);
+            ll.InsertAfter(3, 35);
+            ll.InsertAfter(5, 6);
 
-        Assert.AreEqual("<LinkedList>{5, 6, 4, 3, 35, 2, 2, 2}", ll.ToString());
-        ll.Remove(-1);
-        Assert.AreEqual("<LinkedList>{5, 6, 4, 3, 35, 2, 2, 2}", ll.ToString());
-    }
+            Assert.AreEqual("<LinkedList>{5, 6, 4, 3, 35, 2, 2, 2}", ll.ToString());
+            ll.Remove(-1);
+            Assert.AreEqual("<LinkedList>{5, 6, 4, 3, 35, 2, 2, 2}", ll.ToString());
+        }
 
     [TestMethod]
     public void Remove_Empty()
