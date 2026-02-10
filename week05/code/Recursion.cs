@@ -1,4 +1,11 @@
 using System.Collections;
+using System.Dynamic;
+using System.Formats.Asn1;
+using System.IO.Pipelines;
+using System.Reflection.Metadata;
+using System.Runtime.CompilerServices;
+using System.Security;
+using Microsoft.VisualStudio.TestPlatform.CoreUtilities.Extensions;
 
 public static class Recursion
 {
@@ -15,7 +22,14 @@ public static class Recursion
     public static int SumSquaresRecursive(int n)
     {
         // TODO Start Problem 1
-        return 0;
+  
+        if (n <= 0)
+        {
+            return 0;
+        }
+
+        return (n*n) + SumSquaresRecursive(n-1);
+
     }
 
     /// <summary>
@@ -39,7 +53,33 @@ public static class Recursion
     /// </summary>
     public static void PermutationsChoose(List<string> results, string letters, int size, string word = "")
     {
-        // TODO Start Problem 2
+        // inicia a funçaõ - proximo1
+
+        if (word.Length == size) //Verifica se word esta com a quantidade de letra solicitada = neste caso começa vazia - proximo1
+        {
+          results.Add(word);
+        }
+        else
+        {
+            for (var i=0; i < letters.Length; i++) //inicia um loop para passar letra por letra - proximo1
+            {
+                var letterleft = letters.Remove(i,1); //Cria uma nova variavel string com todas as letras de letter menos a primeira - proximo1
+                PermutationsChoose(results,letterleft,size, word+letters[i]); //Chama novamente o loop
+
+                //neste caso: result = vazio
+                //            letter = letterleft (A string a ser analizada agora ja esta atualizada )
+                //            size = o padrão inicial - não muda
+                //            Word = vazio""+ A letra retirada de letter - agora word="A"
+
+                //A partir deste novos dados reinicia o passso a passo da função até Word ter a quntidade de Letras equivalente a SIZE.
+
+
+            }
+
+        }
+
+
+
     }
 
     /// <summary>
@@ -84,8 +124,14 @@ public static class Recursion
     /// 'remember' has already been added as an input parameter to 
     /// the function for you to complete this task.
     /// </summary>
+
     public static decimal CountWaysToClimb(int s, Dictionary<int, decimal>? remember = null)
     {
+
+        if (remember == null)
+        {
+            remember = new Dictionary<int, decimal>();
+        }
         // Base Cases
         if (s == 0)
             return 0;
@@ -96,11 +142,34 @@ public static class Recursion
         if (s == 3)
             return 4;
 
-        // TODO Start Problem 3
-
+        if (remember.ContainsKey(s))
+        {
+            return remember[s];
+        }
+        
+        else{
         // Solve using recursion
-        decimal ways = CountWaysToClimb(s - 1) + CountWaysToClimb(s - 2) + CountWaysToClimb(s - 3);
+        decimal ways = CountWaysToClimb(s - 1, remember) + CountWaysToClimb(s - 2, remember) + CountWaysToClimb(s - 3, remember);
+        remember.Add(s, ways);
         return ways;
+
+        }
+
+        
+
+        
+
+
+         
+
+        
+
+
+        
+        
+
+        
+
     }
 
     /// <summary>
@@ -116,9 +185,35 @@ public static class Recursion
     /// Using recursion, insert all possible binary strings for a given pattern into the results list.  You might find 
     /// some of the string functions like IndexOf and [..X] / [X..] to be useful in solving this problem.
     /// </summary>
-    public static void WildcardBinary(string pattern, List<string> results)
+    public static void WildcardBinary(string pattern, List<string> results, string result = "")
     {
-        // TODO Start Problem 4
+        if (result.Length == pattern.Length)
+        {
+            results.Add(result);
+            return;
+        }
+
+        char ast = pattern[result.Length];
+
+        if(ast != '*')
+        {
+           WildcardBinary(pattern, results, result + ast);
+        }
+        else
+        {
+            WildcardBinary(pattern, results, result + '0');
+            WildcardBinary(pattern, results, result + '1');
+        }
+
+
+        
+
+
+        
+
+
+
+
     }
 
     /// <summary>
