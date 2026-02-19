@@ -23,6 +23,11 @@ public class BinarySearchTree : IEnumerable<int>
         }
     }
 
+    public override string ToString()
+    {
+        return "<Bst>{" + string.Join(", ", this) + "}";
+    }
+
     /// <summary>
     /// Check to see if the tree contains a certain value
     /// </summary>
@@ -80,23 +85,37 @@ public class BinarySearchTree : IEnumerable<int>
 
     private void TraverseBackward(Node? node, List<int> values)
     {
-        // TODO Problem 3
+        if (node is not null)
+        {
+            TraverseBackward(node.Right, values);
+            values.Add(node.Data);
+            TraverseBackward(node.Left, values);
+        }
     }
 
     /// <summary>
     /// Get the height of the tree
     /// </summary>
+    
+
+
     public int GetHeight()
     {
-        if (_root is null)
-            return 0;
-        return _root.GetHeight();
+       return GetHeight(_root);
     }
 
-    public override string ToString()
+    private int GetHeight(Node? node)
     {
-        return "<Bst>{" + string.Join(", ", this) + "}";
+    // Caso base
+      if (node == null)
+          return 0;
+
+      int leftHeight = GetHeight(node.Left);
+      int rightHeight = GetHeight(node.Right);
+
+      return 1 + Math.Max(leftHeight, rightHeight);
     }
+
 }
 
 public static class IntArrayExtensionMethods {
